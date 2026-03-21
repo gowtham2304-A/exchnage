@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ListingStatus } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+import Logo from "@/app/components/logo";
 
 export const dynamic = "force-dynamic";
 
@@ -68,8 +69,8 @@ export default async function ListingsPage({ searchParams }: ListingsPageProps) 
   return (
     <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-6 sm:px-6 lg:px-8">
-        <Link href="/" className="heading-font flex items-center gap-2 text-2xl font-bold tracking-tight">
-          DIVINEBRIDGE
+        <Link href="/" className="transition hover:opacity-90">
+          <Logo />
         </Link>
         <Link href="/#waitlist" className="rounded-full border border-[var(--foreground)] bg-white px-4 py-2 text-sm font-semibold transition hover:-translate-y-0.5">
           Join Waitlist

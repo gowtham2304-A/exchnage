@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { ListingStatus } from "@prisma/client";
+import Logo from "@/app/components/logo";
 import ListingMessageBox from "@/app/components/messaging/listing-message-box";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -65,8 +66,8 @@ export default async function ListingDetailPage({ params }: ListingDetailPagePro
     return (
       <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
         <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-6 sm:px-6 lg:px-8">
-          <Link href="/" className="heading-font flex items-center gap-2 text-2xl font-bold tracking-tight">
-            DIVINEBRIDGE
+          <Link href="/" className="transition hover:opacity-90">
+            <Logo />
           </Link>
         </header>
         <main className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
@@ -82,8 +83,8 @@ export default async function ListingDetailPage({ params }: ListingDetailPagePro
   return (
     <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-6 sm:px-6 lg:px-8">
-        <Link href="/" className="heading-font flex items-center gap-2 text-2xl font-bold tracking-tight">
-          DIVINEBRIDGE
+        <Link href="/" className="transition hover:opacity-90">
+          <Logo />
         </Link>
         <Link href="/listings" className="text-sm font-semibold text-[var(--brand)]">
           Back to listings

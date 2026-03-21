@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Logo from "@/app/components/logo";
 import WaitlistForm from "@/app/components/waitlist-form";
 
 export default function Home() {
@@ -85,41 +86,8 @@ export default function Home() {
   return (
     <div className="red-aura min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-6 sm:px-6 lg:px-8">
-        <a className="heading-font flex items-center gap-2 text-2xl font-bold tracking-tight" href="#top">
-          <span
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-white"
-            aria-hidden="true"
-          >
-            <svg viewBox="0 0 72 72" className="h-7 w-7 text-[var(--brand)]" fill="none">
-              <circle cx="36" cy="14" r="8" stroke="currentColor" strokeWidth="4" />
-              <path
-                d="M24 24H48"
-                stroke="currentColor"
-                strokeWidth="4"
-                strokeLinecap="round"
-              />
-              <path
-                d="M20 40C26 31 46 31 52 40"
-                stroke="currentColor"
-                strokeWidth="4"
-                strokeLinecap="round"
-              />
-              <path
-                d="M26 48L36 60L46 48"
-                stroke="currentColor"
-                strokeWidth="4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M36 24V34"
-                stroke="currentColor"
-                strokeWidth="4"
-                strokeLinecap="round"
-              />
-            </svg>
-          </span>
-          DIVINEBRIDGE
+        <a href="#top" className="transition hover:opacity-90">
+          <Logo />
         </a>
         <nav className="hidden items-center gap-8 text-sm font-medium text-[var(--muted)] md:flex">
           <a href="#how">How it works</a>
