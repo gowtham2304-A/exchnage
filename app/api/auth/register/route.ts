@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+import { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
@@ -55,37 +56,133 @@ export async function POST(request: Request) {
   }
 
   const { name, email, password } = parsed.data;
-  const existing = await prisma.user.findUnique({ where: { email } });
 
-  if (existing) {
+  try {
+    const existing = await prisma.user.findUnique({ where: { email } });
+
+    if (existing) {
+      return NextResponse.json(
+        { error: "Email is already registered." },
+        {
+          status: 409,
+          headers: {
+            "Cache-Control": "no-store",
+          },
+        }
+      );
+    }
+
+    const passwordHash = await bcrypt.hash(password, 12);
+
+    await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: passwordHash,
+      },
+    });
+
     return NextResponse.json(
-      { error: "Email is already registered." },
+      { success: true },
       {
-        status: 409,
+        status: 201,
+        headers: {
+          "Cache-Control": "no-store",
+        },
+      }
+    );
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === "P2002") {
+        return NextResponse.json(
+          { error: "Email is already registered." },
+          {
+            status: 409,
+            headers: {
+              "Cache-Control": "no-store",
+            },
+          }
+        );
+      }
+
+      if (error.code === "P2021") {
+        return NextResponse.json(
+          { error: "Database tables are not ready. Run prisma migrate deploy on production." },
+          {
+            status: 500,
+            headers: {
+              "Cache-Control": "no-store",
+            },
+          }
+        );
+      }
+    }
+
+    if (error instanceof Prisma.PrismaClientInitializationError) {
+      if (message.includes("Environment variable not found: DATABASE_URL")) {
+        return NextResponse.json(
+          { error: "Server is missing DATABASE_URL configuration." },
+          {
+            status: 500,
+            headers: {
+              "Cache-Control": "no-store",
+            },
+          }
+        );
+      }
+
+      if (message.includes("Authentication failed")) {
+        return NextResponse.json(
+          { error: "Database authentication failed. Check DATABASE_URL username/password." },
+          {
+            status: 500,
+            headers: {
+              "Cache-Control": "no-store",
+            },
+          }
+        );
+      }
+
+      if (message.includes("Can't reach database server") || message.includes("Can't reach database")) {
+        return NextResponse.json(
+          { error: "Cannot reach database server. Check DATABASE_URL host/port and network." },
+          {
+            status: 500,
+            headers: {
+              "Cache-Control": "no-store",
+            },
+          }
+        );
+      }
+    }
+
+    if (message.includes("Environment variable not found: DATABASE_URL")) {
+      return NextResponse.json(
+        { error: "Server is missing DATABASE_URL configuration." },
+        {
+          status: 500,
+          headers: {
+            "Cache-Control": "no-store",
+          },
+        }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        error:
+          process.env.NODE_ENV === "production"
+            ? "Could not create account right now. Please try again shortly."
+            : `Could not create account: ${message}`,
+      },
+      {
+        status: 500,
         headers: {
           "Cache-Control": "no-store",
         },
       }
     );
   }
-
-  const passwordHash = await bcrypt.hash(password, 12);
-
-  await prisma.user.create({
-    data: {
-      name,
-      email,
-      password: passwordHash,
-    },
-  });
-
-  return NextResponse.json(
-    { success: true },
-    {
-      status: 201,
-      headers: {
-        "Cache-Control": "no-store",
-      },
-    }
-  );
 }

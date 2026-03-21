@@ -25,11 +25,18 @@ export default function SignUpPage() {
       body: JSON.stringify({ name, email, password }),
     });
 
-    const body = (await response.json().catch(() => ({}))) as { error?: string };
+    const raw = await response.text();
+    let body: { error?: string } = {};
+
+    try {
+      body = JSON.parse(raw) as { error?: string };
+    } catch {
+      body = {};
+    }
 
     if (!response.ok) {
       setSubmitting(false);
-      setMessage(body.error ?? "Could not create account.");
+      setMessage(body.error ?? "Could not create account. Please check server configuration and try again.");
       return;
     }
 
