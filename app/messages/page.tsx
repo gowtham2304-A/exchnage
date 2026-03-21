@@ -104,7 +104,7 @@ export default function MessagesPage() {
                       {otherParticipant.name || "Unknown"}
                     </h2>
                     {latest && (
-                      <span className="shrink-0 text-[11px] font-semibold text-gray-400">
+                      <span className="shrink-0 text-[11px] font-semibold text-[var(--muted)]">
                         {new Date(latest.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
                       </span>
                     )}
@@ -116,7 +116,7 @@ export default function MessagesPage() {
                     {latest ? (
                       <span className="flex items-center gap-1.5">
                         {isLatestMine && (
-                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400"><path d="m5 12 5 5L20 7"/></svg>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-[var(--brand)]"><path d="m5 12 5 5L20 7"/></svg>
                         )}
                         {latest.content}
                       </span>
