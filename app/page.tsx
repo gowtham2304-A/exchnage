@@ -1,4 +1,5 @@
 import Link from "next/link";
+import WaitlistForm from "@/app/components/waitlist-form";
 
 export default function Home() {
   const stats = [
@@ -277,26 +278,7 @@ export default function Home() {
             Build your wardrobe income stream and stop buying clothes for one-time
             events.
           </p>
-          <form className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <div className="w-full">
-              <input
-                type="email"
-                placeholder="Enter email"
-                required
-                className="w-full rounded-full border border-white/30 bg-white px-5 py-3 text-[var(--foreground)] outline-none"
-              />
-              <label className="mt-3 flex items-start gap-2 text-xs text-white/90">
-                <input type="checkbox" required className="mt-0.5 h-4 w-4 rounded border-white/40" />
-                <span>
-                  I agree to the <Link href="/terms" className="underline">Terms</Link> and <Link href="/policy" className="underline">Policy</Link>.
-                  DivineBridge acts only as a bridge platform and is not responsible for any damage, loss, or disputes.
-                </span>
-              </label>
-            </div>
-            <button type="submit" className="rounded-full bg-[var(--brand-deep)] px-6 py-3 text-sm font-bold">
-              Get Early Access
-            </button>
-          </form>
+          <WaitlistForm />
         </section>
       </main>
 
