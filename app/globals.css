@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #fcfcfc;
   --surface: #ffffff;
-  --foreground: #660000; /* Very Dark Pure Red */
-  --muted: #ff3333; /* Soft Pure Red */
-  --brand: #ff0000; /* Bright Pure Red */
-  --brand-deep: #cc0000; /* Dark Pure Red */
-  --line: #ffcccc; /* Light Pure Red */
+  --foreground: #18181b;
+  --muted: #71717a;
+  --brand: #e11d48;
+  --brand-deep: #be123c;
+  --line: #e4e4e7;
 }
 
 @theme inline {

@@ -54,7 +54,7 @@ export default function MessagesPage() {
           <h1 className="heading-font text-4xl font-extrabold tracking-tight text-[var(--foreground)]">Inbox</h1>
           <p className="mt-2 text-sm font-medium text-[var(--muted)]">View and manage your conversations</p>
         </div>
-        <Link href="/" className="flex h-10 items-center justify-center rounded-full bg-[var(--line)] px-4 text-sm font-bold text-[var(--brand-deep)] transition hover:bg-[#ffcccc]">
+        <Link href="/" className="flex h-10 items-center justify-center rounded-full bg-[var(--line)] px-4 text-sm font-bold text-[var(--foreground)] transition hover:bg-rose-100 hover:text-rose-700">
           Back
         </Link>
       </div>
@@ -66,14 +66,14 @@ export default function MessagesPage() {
       ) : null}
 
       {error ? (
-        <div className="rounded-2xl bg-[#fff0f0] p-4 text-center text-sm font-semibold text-[#cc0000]">
+        <div className="rounded-2xl bg-rose-50 border border-rose-200 p-4 text-center text-sm font-semibold text-rose-600">
           {error}
         </div>
       ) : null}
 
       {!loading && !error && conversations.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-[var(--line)] bg-[#fff9f8] py-20 text-center reveal-up-delay">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm mb-4 text-[var(--brand)]">
+        <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-[var(--line)] bg-[var(--background)] py-20 text-center reveal-up-delay">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm border border-[var(--line)] mb-4 text-[var(--muted)]">
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/><circle cx="9" cy="9" r="2"/><path d="M21 15V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2z"/></svg>
           </div>
           <p className="text-lg font-bold text-[var(--foreground)]">It&apos;s quiet here...</p>
@@ -95,7 +95,7 @@ export default function MessagesPage() {
               style={{ animationDelay: `${0.1 * i}s` }}
             >
               <div className="flex flex-1 items-center gap-4">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#ffcccc] font-bold text-xl text-[#cc0000] group-hover:bg-[var(--brand)] group-hover:text-white transition-colors">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-rose-100 font-bold text-xl text-rose-700 group-hover:bg-[var(--brand)] group-hover:text-white transition-colors">
                   {(otherParticipant.name || "U")[0].toUpperCase()}
                 </div>
                 <div className="flex-1 overflow-hidden">

@@ -106,11 +106,11 @@ export default function ConversationPage({ params }: { params: Promise<{ convers
 
       <div className="mb-6 flex items-center gap-4 rounded-b-3xl border-b border-[var(--line)] bg-white pb-6 pt-2">
         {otherParticipant ? (
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#ffcccc] text-xl font-bold text-[#cc0000] shadow-sm">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-rose-100 text-xl font-bold text-rose-700 shadow-sm">
             {(otherParticipant.name || "U")[0].toUpperCase()}
           </div>
         ) : (
-          <div className="h-12 w-12 rounded-full bg-[#ffcccc] animate-pulse" />
+          <div className="h-12 w-12 rounded-full bg-rose-100 animate-pulse" />
         )}
         <div>
           <h1 className="heading-font text-2xl font-bold tracking-tight text-[var(--foreground)]">
@@ -130,7 +130,7 @@ export default function ConversationPage({ params }: { params: Promise<{ convers
         ) : null}
 
         {error ? (
-          <div className="my-8 rounded-2xl bg-[#fff0f0] p-4 text-center text-sm font-semibold text-[#cc0000]">
+          <div className="my-8 rounded-2xl bg-rose-50 border border-rose-200 p-4 text-center text-sm font-semibold text-rose-600">
             {error}
           </div>
         ) : null}
@@ -146,7 +146,7 @@ export default function ConversationPage({ params }: { params: Promise<{ convers
                 <div
                   className={`relative max-w-[80%] rounded-2xl px-5 py-3 shadow-sm sm:max-w-[#70%] ${
                     isMe
-                      ? "rounded-br-sm bg-[var(--brand)] text-white shadow-[#ff0000]/20"
+                      ? "rounded-br-sm bg-[var(--brand)] text-white shadow-md shadow-[var(--brand)]/20"
                       : "rounded-bl-sm border border-[var(--line)] bg-white text-[var(--foreground)]"
                   }`}
                 >
@@ -176,7 +176,7 @@ export default function ConversationPage({ params }: { params: Promise<{ convers
           value={content}
           onChange={(event) => setContent(event.target.value)}
           placeholder="Message..."
-          className="flex-1 rounded-2xl bg-transparent px-4 py-3 text-[15px] text-[var(--foreground)] outline-none placeholder:text-[var(--muted)] focus:bg-[#fff9f8]"
+          className="flex-1 rounded-2xl bg-transparent px-4 py-3 text-[15px] text-[var(--foreground)] outline-none placeholder:text-[var(--muted)] focus:bg-rose-50"
         />
         <button
           type="submit"
