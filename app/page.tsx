@@ -202,12 +202,13 @@ export default function Home() {
           <h2 className="heading-font text-3xl font-bold sm:text-4xl">Most rented categories</h2>
           <div className="mt-6 grid gap-3 sm:grid-cols-2 md:grid-cols-3">
             {categories.map((item) => (
-              <div
+              <Link
                 key={item}
-                className="shine-card rounded-xl border border-[var(--line)] bg-white px-4 py-4 font-semibold"
+                href={`/listings?category=${encodeURIComponent(item)}`}
+                className="shine-card rounded-xl border border-[var(--line)] bg-white px-4 py-4 font-semibold transition hover:shadow-lg hover:-translate-y-1"
               >
                 {item}
-              </div>
+              </Link>
             ))}
           </div>
         </section>
