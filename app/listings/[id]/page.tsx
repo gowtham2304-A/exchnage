@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { ListingStatus } from "@prisma/client";
 import Logo from "@/app/components/logo";
 import ListingMessageBox from "@/app/components/messaging/listing-message-box";
+import ListingManageOptions from "@/app/components/listing-manage-options";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
@@ -165,7 +166,7 @@ export default async function ListingDetailPage({ params }: ListingDetailPagePro
               session.user.id !== listing.owner.id ? (
                 <ListingMessageBox listingId={listing.id} recipientId={listing.owner.id} />
               ) : (
-                <p className="mt-4 text-sm text-[var(--muted)]">This is your own listing.</p>
+                <ListingManageOptions listingId={listing.id} />
               )
             ) : (
               <p className="mt-4 text-sm text-[var(--muted)]">

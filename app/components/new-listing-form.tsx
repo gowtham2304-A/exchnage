@@ -8,18 +8,35 @@ type SubmitState = "idle" | "submitting" | "success" | "error";
 
 const conditions: ListingCondition[] = ["NEW", "LIKE_NEW", "GOOD", "FAIR"];
 
-export default function NewListingForm() {
+export type InitialListingData = {
+  title: string;
+  description: string;
+  category: string;
+  size: string;
+  condition: ListingCondition;
+  pricePer24Hours: string;
+  securityDeposit: string;
+  location: string;
+  imageUrl: string;
+};
+
+type Props = {
+  listingId?: string;
+  initialData?: InitialListingData;
+};
+
+export default function NewListingForm({ listingId, initialData }: Props = {}) {
   const router = useRouter();
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [size, setSize] = useState("");
-  const [condition, setCondition] = useState<ListingCondition>("LIKE_NEW");
-  const [pricePer24Hours, setPricePer24Hours] = useState("");
-  const [securityDeposit, setSecurityDeposit] = useState("");
-  const [location, setLocation] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [title, setTitle] = useState(initialData?.title || "");
+  const [description, setDescription] = useState(initialData?.description || "");
+  const [category, setCategory] = useState(initialData?.category || "");
+  const [size, setSize] = useState(initialData?.size || "");
+  const [condition, setCondition] = useState<ListingCondition>(initialData?.condition || "LIKE_NEW");
+  const [pricePer24Hours, setPricePer24Hours] = useState(initialData?.pricePer24Hours || "");
+  const [securityDeposit, setSecurityDeposit] = useState(initialData?.securityDeposit || "");
+  const [location, setLocation] = useState(initialData?.location || "");
+  const [imageUrl, setImageUrl] = useState(initialData?.imageUrl || "");
   const [imageUploading, setImageUploading] = useState(false);
   const [imageUploadMessage, setImageUploadMessage] = useState("");
 
@@ -72,8 +89,11 @@ export default function NewListingForm() {
     setStatus("submitting");
     setMessage("");
 
-    const response = await fetch("/api/listings", {
-      method: "POST",
+    const url = listingId ? `/api/listings/${listingId}` : "/api/listings";
+    const method = listingId ? "PATCH" : "POST";
+
+    const response = await fetch(url, {
+      method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         title,
@@ -107,7 +127,7 @@ export default function NewListingForm() {
     }
 
     setStatus("success");
-    setMessage(body.message ?? "Item listed successfully.");
+    setMessage(body.message ?? (listingId ? "Item updated successfully." : "Item listed successfully."));
 
     if (body.id) {
       setTimeout(() => router.push(`/listings/${body.id}`), 700);
@@ -244,7 +264,7 @@ export default function NewListingForm() {
         disabled={status === "submitting" || imageUploading}
         className="rounded-xl bg-[var(--brand)] px-6 py-3 text-sm font-bold text-white disabled:opacity-60"
       >
-        {imageUploading ? "Uploading image..." : status === "submitting" ? "Listing item..." : "List Item"}
+        {imageUploading ? "Uploading image..." : status === "submitting" ? (listingId ? "Updating..." : "Listing item...") : (listingId ? "Update Listing" : "List Item")}
       </button>
     </form>
   );
