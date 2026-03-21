@@ -8,12 +8,13 @@ import { prisma } from "@/lib/prisma";
 export const dynamic = "force-dynamic";
 
 type ListingDetailPageProps = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
 export default async function ListingDetailPage({ params }: ListingDetailPageProps) {
+  const { id } = await params;
   const session = await getServerSession(authOptions);
 
   let listing: {
@@ -33,7 +34,7 @@ export default async function ListingDetailPage({ params }: ListingDetailPagePro
   try {
     listing = await prisma.listing.findFirst({
       where: {
-        id: params.id,
+        id: id,
         status: ListingStatus.ACTIVE,
       },
       select: {

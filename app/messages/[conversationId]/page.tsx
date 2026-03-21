@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useCallback, useEffect, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState, use } from "react";
 
 type ConversationData = {
   id: string;
@@ -9,7 +9,10 @@ type ConversationData = {
   messages: { id: string; senderId: string; content: string; createdAt: string }[];
 };
 
-export default function ConversationPage({ params }: { params: { conversationId: string } }) {
+export default function ConversationPage({ params }: { params: Promise<{ conversationId: string }> }) {
+  const unwrappedParams = use(params);
+  const conversationId = unwrappedParams.conversationId;
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [conversation, setConversation] = useState<ConversationData | null>(null);
@@ -17,7 +20,7 @@ export default function ConversationPage({ params }: { params: { conversationId:
   const [sending, setSending] = useState(false);
 
   const loadConversation = useCallback(async () => {
-    const response = await fetch(`/api/messages/${params.conversationId}`, { cache: "no-store" }).catch(() => null);
+    const response = await fetch(`/api/messages/${conversationId}`, { cache: "no-store" }).catch(() => null);
 
     if (!response) {
       setError("Network issue.");
@@ -38,7 +41,7 @@ export default function ConversationPage({ params }: { params: { conversationId:
 
     setConversation(body.conversation ?? null);
     setLoading(false);
-  }, [params.conversationId]);
+  }, [conversationId]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -49,7 +52,7 @@ export default function ConversationPage({ params }: { params: { conversationId:
     event.preventDefault();
     setSending(true);
 
-    const response = await fetch(`/api/messages/${params.conversationId}`, {
+    const response = await fetch(`/api/messages/${conversationId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ content }),
