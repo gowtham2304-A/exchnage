@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { DM_Sans, Space_Grotesk } from "next/font/google";
+import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 
-const displayFont = Space_Grotesk({
+const displayFont = Outfit({
   variable: "--font-display",
   subsets: ["latin"],
 });
 
-const bodyFont = DM_Sans({
+const bodyFont = Inter({
   variable: "--font-body",
   subsets: ["latin"],
 });

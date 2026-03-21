@@ -72,7 +72,7 @@ export async function GET(
       return NextResponse.json({ error: "Not allowed." }, { status: 403 });
     }
 
-    return NextResponse.json({ conversation });
+    return NextResponse.json({ conversation, myId: session.user.id });
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2021") {
       return NextResponse.json(

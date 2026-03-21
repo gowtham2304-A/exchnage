@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fff7f8;
+  --background: #ffffff;
   --surface: #ffffff;
-  --foreground: #3a0a13;
-  --muted: #7f1d2d;
-  --brand: #dc2626;
-  --brand-deep: #9f1239;
-  --line: #fecdd3;
+  --foreground: #111111;
+  --muted: #666666;
+  --brand: #e11d48;
+  --brand-deep: #be123c;
+  --line: #ffe4e6;
 }
 
 @theme inline {
@@ -52,7 +52,7 @@ body {
   height: 26rem;
   top: -6rem;
   right: -8rem;
-  background: rgba(220, 38, 38, 0.22);
+  background: rgba(220, 38, 38, 0.15);
   animation: drift 8s ease-in-out infinite;
 }
 
@@ -61,7 +61,7 @@ body {
   height: 22rem;
   left: -7rem;
   bottom: -8rem;
-  background: rgba(190, 24, 93, 0.2);
+  background: rgba(190, 24, 93, 0.1);
   animation: drift 10s ease-in-out infinite reverse;
 }
 
@@ -96,6 +96,36 @@ body {
   animation: shineSweep 3.8s linear infinite;
 }
 
+.slide-in-right {
+  animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 @keyframes revealUp {
   from {
     opacity: 0;
@@ -120,10 +150,10 @@ body {
 @keyframes pulseGlow {
   0%,
   100% {
-    box-shadow: 0 0 0 rgba(255, 255, 255, 0.06);
+    box-shadow: 0 0 0 rgba(225, 29, 72, 0.06);
   }
   50% {
-    box-shadow: 0 0 0.9rem rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 0.9rem rgba(225, 29, 72, 0.3);
   }
 }
 
