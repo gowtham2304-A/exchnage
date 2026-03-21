@@ -59,3 +59,17 @@ npm audit
 - Use a strong `NEXTAUTH_SECRET` (minimum 32 random bytes).
 - Set `DATABASE_URL` to a managed PostgreSQL instance in production.
 - Enable HTTPS in production to benefit from secure cookie transport and HSTS.
+
+## Publish To GitHub
+
+If your local repo is already committed, create a new empty repository on GitHub,
+then run:
+
+git remote add origin https://github.com/<your-username>/exchnage.git
+git branch -M master
+git push -u origin master
+
+Current local branch: master
+
+Current latest local commit:
+243f113 - feat: secure DivineBridge app and add auth, prisma, and deployment readiness
