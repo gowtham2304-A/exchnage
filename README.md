@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DivineBridge
 
-## Getting Started
+DivineBridge is a student-focused clothing rental platform built with Next.js App Router, Prisma, and NextAuth.
 
-First, run the development server:
+## Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Next.js 16 (App Router)
+- React 19
+- Prisma + PostgreSQL
+- NextAuth credentials auth
+- Tailwind CSS 4
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Local Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Install dependencies:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+	npm install
 
-## Learn More
+2. Create environment variables:
 
-To learn more about Next.js, take a look at the following resources:
+	Copy `.env.example` to `.env` and fill all values.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Generate Prisma client and run migration:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+	npm run prisma:generate
+	npm run prisma:migrate
 
-## Deploy on Vercel
+4. Start development server:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+	npm run dev
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Security Features Implemented
+
+- Password hashing with bcrypt (12 rounds)
+- Server-side input validation with zod
+- Registration endpoint rate limiting by client IP
+- Security response headers via middleware:
+  - X-Content-Type-Options
+  - X-Frame-Options
+  - Referrer-Policy
+  - Permissions-Policy
+  - Cross-Origin-Opener-Policy
+  - Cross-Origin-Resource-Policy
+  - Strict-Transport-Security (production only)
+- NextAuth secret-based session protection
+
+## Security Checks
+
+Run lint:
+
+npm run lint
+
+Run dependency audit:
+
+npm audit
+
+## Important Notes
+
+- Use a strong `NEXTAUTH_SECRET` (minimum 32 random bytes).
+- Set `DATABASE_URL` to a managed PostgreSQL instance in production.
+- Enable HTTPS in production to benefit from secure cookie transport and HSTS.
