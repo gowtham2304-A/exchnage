@@ -11,30 +11,48 @@ type ListingDetailPageProps = {
 };
 
 export default async function ListingDetailPage({ params }: ListingDetailPageProps) {
-  const listing = await prisma.listing.findFirst({
-    where: {
-      id: params.id,
-      status: ListingStatus.ACTIVE,
-    },
-    select: {
-      id: true,
-      title: true,
-      description: true,
-      category: true,
-      size: true,
-      condition: true,
-      pricePerDay: true,
-      securityDeposit: true,
-      location: true,
-      imageUrl: true,
-      owner: {
-        select: {
-          name: true,
-          email: true,
+  let listing: {
+    id: string;
+    title: string;
+    description: string;
+    category: string;
+    size: string;
+    condition: string;
+    pricePerDay: unknown;
+    securityDeposit: unknown;
+    location: string;
+    imageUrl: string | null;
+    owner: { name: string | null; email: string | null };
+  } | null = null;
+
+  try {
+    listing = await prisma.listing.findFirst({
+      where: {
+        id: params.id,
+        status: ListingStatus.ACTIVE,
+      },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        category: true,
+        size: true,
+        condition: true,
+        pricePerDay: true,
+        securityDeposit: true,
+        location: true,
+        imageUrl: true,
+        owner: {
+          select: {
+            name: true,
+            email: true,
+          },
         },
       },
-    },
-  });
+    });
+  } catch {
+    listing = null;
+  }
 
   if (!listing) {
     return (

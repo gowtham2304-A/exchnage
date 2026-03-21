@@ -40,7 +40,7 @@ export default function WaitlistForm() {
       }
 
       setStatus("success");
-      setMessage(result.message ?? "You are on the waitlist.");
+      setMessage((result.message ?? "You are on the waitlist.") + " Create account from the button above to set up your profile.");
       setEmail("");
       setConsent(false);
     } catch {

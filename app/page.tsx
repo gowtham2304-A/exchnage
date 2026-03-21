@@ -160,7 +160,7 @@ export default function Home() {
                 Start Renting
               </a>
               <a
-                href="#how"
+                href="/auth/signup"
                 className="rounded-full border border-[var(--foreground)] bg-white px-6 py-3 text-sm font-bold transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(191,18,40,0.2)]"
               >
                 Start Listing
@@ -279,6 +279,20 @@ export default function Home() {
             Build your wardrobe income stream and stop buying clothes for one-time
             events.
           </p>
+          <p className="mt-2 text-sm text-white/80">
+            Waitlist email is for launch updates only. To create a profile, use Create Account.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <Link href="/auth/signup" className="rounded-full bg-white px-5 py-2 text-sm font-bold text-[var(--brand)]">
+              Create Account
+            </Link>
+            <Link href="/auth/signin" className="rounded-full border border-white/60 px-5 py-2 text-sm font-semibold text-white">
+              Sign In
+            </Link>
+            <Link href="/profile" className="rounded-full border border-white/60 px-5 py-2 text-sm font-semibold text-white">
+              My Profile
+            </Link>
+          </div>
           <WaitlistForm />
         </section>
       </main>

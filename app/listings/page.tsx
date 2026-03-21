@@ -12,41 +12,58 @@ type ListingsPageProps = {
 
 export default async function ListingsPage({ searchParams }: ListingsPageProps) {
   const category = searchParams?.category?.trim();
+  let dbError = false;
 
-  const activeCategoriesPromise = prisma.listing.findMany({
-    where: { status: ListingStatus.ACTIVE },
-    select: { category: true },
-    distinct: ["category"],
-    orderBy: { category: "asc" },
-  });
+  let categories: string[] = [];
+  let listings: Array<{
+    id: string;
+    title: string;
+    category: string;
+    pricePerDay: unknown;
+    imageUrl: string | null;
+    location: string;
+    owner: { name: string | null };
+  }> = [];
 
-  const listingsPromise = prisma.listing.findMany({
-    where: {
-      status: ListingStatus.ACTIVE,
-      ...(category ? { category } : {}),
-    },
-    select: {
-      id: true,
-      title: true,
-      category: true,
-      pricePerDay: true,
-      imageUrl: true,
-      location: true,
-      owner: {
-        select: {
-          name: true,
+  try {
+    const activeCategoriesPromise = prisma.listing.findMany({
+      where: { status: ListingStatus.ACTIVE },
+      select: { category: true },
+      distinct: ["category"],
+      orderBy: { category: "asc" },
+    });
+
+    const listingsPromise = prisma.listing.findMany({
+      where: {
+        status: ListingStatus.ACTIVE,
+        ...(category ? { category } : {}),
+      },
+      select: {
+        id: true,
+        title: true,
+        category: true,
+        pricePerDay: true,
+        imageUrl: true,
+        location: true,
+        owner: {
+          select: {
+            name: true,
+          },
         },
       },
-    },
-    orderBy: { createdAt: "desc" },
-  });
+      orderBy: { createdAt: "desc" },
+    });
 
-  const [activeCategories, listings] = await Promise.all([
-    activeCategoriesPromise,
-    listingsPromise,
-  ]);
+    const [activeCategories, fetchedListings] = await Promise.all([
+      activeCategoriesPromise,
+      listingsPromise,
+    ]);
 
-  const categories = activeCategories.map((entry) => entry.category);
+    categories = activeCategories.map((entry) => entry.category);
+    listings = fetchedListings;
+  } catch {
+    dbError = true;
+  }
 
   return (
     <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
@@ -63,7 +80,9 @@ export default async function ListingsPage({ searchParams }: ListingsPageProps) 
         <div className="mb-8">
           <h1 className="heading-font text-4xl font-bold">Browse Listings</h1>
           <p className="mt-2 text-[var(--muted)]">
-            {category
+            {dbError
+              ? "Listings are temporarily unavailable. Please try again shortly."
+              : category
               ? `Showing ${listings.length} real listings in "${category}"`
               : `Showing all ${listings.length} active listings`}
           </p>
@@ -95,7 +114,12 @@ export default async function ListingsPage({ searchParams }: ListingsPageProps) 
           ))}
         </div>
 
-        {listings.length === 0 ? (
+        {dbError ? (
+          <div className="rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-12 text-center">
+            <p className="text-lg text-[var(--muted)]">We could not load products right now.</p>
+            <p className="mt-2 text-sm text-[var(--muted)]">Please check deployment environment variables and database migrations.</p>
+          </div>
+        ) : listings.length === 0 ? (
           <div className="rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-12 text-center">
             <p className="text-lg text-[var(--muted)]">No active listings found.</p>
             <p className="mt-2 text-sm text-[var(--muted)]">Add products to your database and they will appear here automatically.</p>
