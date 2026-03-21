@@ -54,7 +54,7 @@ export default function MessagesPage() {
           <h1 className="heading-font text-4xl font-extrabold tracking-tight text-[var(--foreground)]">Inbox</h1>
           <p className="mt-2 text-sm font-medium text-[var(--muted)]">View and manage your conversations</p>
         </div>
-        <Link href="/" className="flex h-10 items-center justify-center rounded-full bg-[var(--line)] px-4 text-sm font-bold text-[var(--brand-deep)] transition hover:bg-[#ffdbd4]">
+        <Link href="/" className="flex h-10 items-center justify-center rounded-full bg-[var(--line)] px-4 text-sm font-bold text-[var(--brand-deep)] transition hover:bg-[#ffcccc]">
           Back
         </Link>
       </div>
@@ -66,7 +66,7 @@ export default function MessagesPage() {
       ) : null}
 
       {error ? (
-        <div className="rounded-2xl bg-[#fff4f2] p-4 text-center text-sm font-semibold text-[#cc2000]">
+        <div className="rounded-2xl bg-[#fff0f0] p-4 text-center text-sm font-semibold text-[#cc0000]">
           {error}
         </div>
       ) : null}
@@ -95,7 +95,7 @@ export default function MessagesPage() {
               style={{ animationDelay: `${0.1 * i}s` }}
             >
               <div className="flex flex-1 items-center gap-4">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#ffdbd4] font-bold text-xl text-[#cc2000] group-hover:bg-[var(--brand)] group-hover:text-white transition-colors">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#ffcccc] font-bold text-xl text-[#cc0000] group-hover:bg-[var(--brand)] group-hover:text-white transition-colors">
                   {(otherParticipant.name || "U")[0].toUpperCase()}
                 </div>
                 <div className="flex-1 overflow-hidden">

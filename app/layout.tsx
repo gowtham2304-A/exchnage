@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Inter, Outfit } from "next/font/google";
+import { Syne, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
-const displayFont = Outfit({
+const displayFont = Syne({
   variable: "--font-display",
   subsets: ["latin"],
 });
 
-const bodyFont = Inter({
+const bodyFont = Plus_Jakarta_Sans({
   variable: "--font-body",
   subsets: ["latin"],
 });

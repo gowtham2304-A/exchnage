@@ -106,11 +106,11 @@ export default function ConversationPage({ params }: { params: Promise<{ convers
 
       <div className="mb-6 flex items-center gap-4 rounded-b-3xl border-b border-[var(--line)] bg-white pb-6 pt-2">
         {otherParticipant ? (
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#ffdbd4] text-xl font-bold text-[#cc2000] shadow-sm">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#ffcccc] text-xl font-bold text-[#cc0000] shadow-sm">
             {(otherParticipant.name || "U")[0].toUpperCase()}
           </div>
         ) : (
-          <div className="h-12 w-12 rounded-full bg-[#ffdbd4] animate-pulse" />
+          <div className="h-12 w-12 rounded-full bg-[#ffcccc] animate-pulse" />
         )}
         <div>
           <h1 className="heading-font text-2xl font-bold tracking-tight text-[var(--foreground)]">
@@ -130,7 +130,7 @@ export default function ConversationPage({ params }: { params: Promise<{ convers
         ) : null}
 
         {error ? (
-          <div className="my-8 rounded-2xl bg-[#fff4f2] p-4 text-center text-sm font-semibold text-[#cc2000]">
+          <div className="my-8 rounded-2xl bg-[#fff0f0] p-4 text-center text-sm font-semibold text-[#cc0000]">
             {error}
           </div>
         ) : null}
@@ -146,7 +146,7 @@ export default function ConversationPage({ params }: { params: Promise<{ convers
                 <div
                   className={`relative max-w-[80%] rounded-2xl px-5 py-3 shadow-sm sm:max-w-[#70%] ${
                     isMe
-                      ? "rounded-br-sm bg-[var(--brand)] text-white shadow-[#ff2800]/20"
+                      ? "rounded-br-sm bg-[var(--brand)] text-white shadow-[#ff0000]/20"
                       : "rounded-bl-sm border border-[var(--line)] bg-white text-[var(--foreground)]"
                   }`}
                 >
