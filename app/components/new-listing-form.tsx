@@ -20,12 +20,55 @@ export default function NewListingForm() {
   const [securityDeposit, setSecurityDeposit] = useState("");
   const [location, setLocation] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [imageUploading, setImageUploading] = useState(false);
+  const [imageUploadMessage, setImageUploadMessage] = useState("");
 
   const [status, setStatus] = useState<SubmitState>("idle");
   const [message, setMessage] = useState("");
 
+  async function uploadImageFile(file: File) {
+    setImageUploading(true);
+    setImageUploadMessage("");
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await fetch("/api/uploads/listing-image", {
+      method: "POST",
+      body: formData,
+    }).catch(() => null);
+
+    if (!response) {
+      setImageUploading(false);
+      setImageUploadMessage("Image upload failed due to network issue.");
+      return;
+    }
+
+    const body = (await response.json().catch(() => ({}))) as {
+      error?: string;
+      imageUrl?: string;
+    };
+
+    if (!response.ok || !body.imageUrl) {
+      setImageUploading(false);
+      setImageUploadMessage(body.error ?? "Image upload failed.");
+      return;
+    }
+
+    setImageUrl(body.imageUrl);
+    setImageUploadMessage("Image uploaded successfully.");
+    setImageUploading(false);
+  }
+
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (imageUploading) {
+      setStatus("error");
+      setMessage("Please wait for image upload to finish.");
+      return;
+    }
+
     setStatus("submitting");
     setMessage("");
 
@@ -165,13 +208,30 @@ export default function NewListingForm() {
         </div>
       </div>
 
-      <input
-        type="url"
-        value={imageUrl}
-        onChange={(event) => setImageUrl(event.target.value)}
-        placeholder="Image URL (optional)"
-        className="w-full rounded-xl border border-[var(--line)] bg-white px-4 py-3"
-      />
+      <div className="grid gap-2">
+        <label className="block text-sm font-semibold">Upload image (optional)</label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(event) => {
+            const file = event.target.files?.[0];
+            if (file) {
+              void uploadImageFile(file);
+            }
+          }}
+          className="w-full rounded-xl border border-[var(--line)] bg-white px-4 py-3"
+        />
+        {imageUrl ? (
+          <div className="rounded-xl border border-[var(--line)] bg-white p-3">
+            <img src={imageUrl} alt="Uploaded preview" className="h-40 w-full rounded-lg object-cover" />
+          </div>
+        ) : null}
+        {imageUploadMessage ? (
+          <p className={`text-sm ${imageUploadMessage.includes("success") ? "text-green-700" : "text-red-600"}`}>
+            {imageUploadMessage}
+          </p>
+        ) : null}
+      </div>
 
       {status !== "idle" ? (
         <p className={`text-sm ${status === "error" ? "text-red-600" : "text-green-700"}`} role="status" aria-live="polite">
@@ -181,10 +241,10 @@ export default function NewListingForm() {
 
       <button
         type="submit"
-        disabled={status === "submitting"}
+        disabled={status === "submitting" || imageUploading}
         className="rounded-xl bg-[var(--brand)] px-6 py-3 text-sm font-bold text-white disabled:opacity-60"
       >
-        {status === "submitting" ? "Listing item..." : "List Item"}
+        {imageUploading ? "Uploading image..." : status === "submitting" ? "Listing item..." : "List Item"}
       </button>
     </form>
   );
