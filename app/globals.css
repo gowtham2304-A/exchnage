@@ -3,11 +3,11 @@
 :root {
   --background: #ffffff;
   --surface: #ffffff;
-  --foreground: #881337; /* Very Deep Red */
-  --muted: #f43f5e; /* Rose 500 */
-  --brand: #e11d48; /* Vibrant Rose 600 */
-  --brand-deep: #be123c; /* Rose 700 */
-  --line: #ffe4e6; /* Rose 100 for subtle lines */
+  --foreground: #4a0b00; /* Very Deep Hot Red for readable text */
+  --muted: #ff6a4d; /* Light Ferrari Red */
+  --brand: #ff2800; /* Hot Ferrari Red */
+  --brand-deep: #cc2000; /* Darker Ferrari Red */
+  --line: #ffdbd4; /* Pale Hot Red for lines */
 }
 
 @theme inline {
