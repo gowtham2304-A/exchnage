@@ -52,30 +52,32 @@ export default function ListingMessageBox({ listingId, recipientId }: Props) {
   }
 
   return (
-    <div className="mt-8 rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-4">
-      <h2 className="heading-font text-xl font-semibold">Message Owner In-App</h2>
-      <form className="mt-3 grid gap-3" onSubmit={onSubmit}>
+    <div className="mt-16 pt-12 border-t border-[var(--line)]">
+      <h2 className="heading-font text-[13px] font-bold uppercase tracking-[0.2em] mb-6 text-[var(--foreground)]">Direct Message</h2>
+      <form className="grid gap-6" onSubmit={onSubmit}>
         <textarea
           required
           minLength={2}
-          rows={4}
+          rows={3}
           value={content}
           onChange={(event) => setContent(event.target.value)}
-          placeholder="Write your message..."
-          className="w-full rounded-xl border border-[var(--line)] bg-white px-4 py-3"
+          placeholder="I'm interested in renting this for an upcoming event..."
+          className="w-full resize-none border-b border-[var(--line)] bg-transparent py-4 text-sm outline-none placeholder:text-[var(--muted)] focus:border-black transition-colors"
         />
-        {message ? (
-          <p className="text-sm text-[var(--brand)]" role="status" aria-live="polite">
-            {message}
-          </p>
-        ) : null}
-        <button
-          type="submit"
-          disabled={submitting}
-          className="w-fit rounded-xl bg-[var(--brand)] px-5 py-2 text-sm font-bold text-white disabled:opacity-60"
-        >
-          {submitting ? "Sending..." : "Send Message"}
-        </button>
+        <div className="flex items-center justify-between">
+          <button
+            type="submit"
+            disabled={submitting}
+            className="flex h-12 items-center justify-center bg-black px-8 text-[11px] font-bold uppercase tracking-[0.2em] text-white transition hover:bg-[var(--brand)] disabled:opacity-50"
+          >
+            {submitting ? "Sending..." : "Send Request"}
+          </button>
+          {message ? (
+            <p className="text-[11px] font-bold uppercase tracking-widest text-[var(--brand)]" role="status" aria-live="polite">
+              {message}
+            </p>
+          ) : null}
+        </div>
       </form>
     </div>
   );
