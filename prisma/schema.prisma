@@ -40,6 +40,9 @@ model User {
   listings      Listing[]
   accounts      Account[]
   sessions      Session[]
+  conversationsAsA Conversation[] @relation("ConversationParticipantA")
+  conversationsAsB Conversation[] @relation("ConversationParticipantB")
+  sentMessages Message[] @relation("MessageSender")
 }
 
 model Listing {
@@ -59,10 +62,44 @@ model Listing {
   updatedAt       DateTime         @updatedAt
 
   owner User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  conversations Conversation[]
 
   @@index([ownerId])
   @@index([status])
   @@index([category])
+}
+
+model Conversation {
+  id             String   @id @default(cuid())
+  listingId      String
+  participantAId String
+  participantBId String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  listing      Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  participantA User    @relation("ConversationParticipantA", fields: [participantAId], references: [id], onDelete: Cascade)
+  participantB User    @relation("ConversationParticipantB", fields: [participantBId], references: [id], onDelete: Cascade)
+  messages     Message[]
+
+  @@unique([listingId, participantAId, participantBId])
+  @@index([listingId])
+  @@index([participantAId])
+  @@index([participantBId])
+}
+
+model Message {
+  id             String   @id @default(cuid())
+  conversationId String
+  senderId       String
+  content        String
+  createdAt      DateTime @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User         @relation("MessageSender", fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId, createdAt])
+  @@index([senderId])
 }
 
 model Account {

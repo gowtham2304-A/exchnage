@@ -1,5 +1,8 @@
 import Link from "next/link";
+import { getServerSession } from "next-auth";
 import { ListingStatus } from "@prisma/client";
+import ListingMessageBox from "@/app/components/messaging/listing-message-box";
+import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
@@ -11,6 +14,8 @@ type ListingDetailPageProps = {
 };
 
 export default async function ListingDetailPage({ params }: ListingDetailPageProps) {
+  const session = await getServerSession(authOptions);
+
   let listing: {
     id: string;
     title: string;
@@ -22,7 +27,7 @@ export default async function ListingDetailPage({ params }: ListingDetailPagePro
     securityDeposit: unknown;
     location: string;
     imageUrl: string | null;
-    owner: { name: string | null; email: string | null };
+    owner: { id: string; name: string | null; email: string | null };
   } | null = null;
 
   try {
@@ -44,6 +49,7 @@ export default async function ListingDetailPage({ params }: ListingDetailPagePro
         imageUrl: true,
         owner: {
           select: {
+            id: true,
             name: true,
             email: true,
           },
@@ -117,11 +123,8 @@ export default async function ListingDetailPage({ params }: ListingDetailPagePro
             </div>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href="/#waitlist"
-                className="rounded-xl bg-[var(--brand)] px-6 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:shadow-lg"
-              >
-                Join Waitlist to Request
+              <Link href="/messages" className="rounded-xl bg-[var(--brand)] px-6 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:shadow-lg">
+                Open Messages
               </Link>
               {listing.owner.email ? (
                 <a
@@ -132,6 +135,18 @@ export default async function ListingDetailPage({ params }: ListingDetailPagePro
                 </a>
               ) : null}
             </div>
+
+            {session?.user?.id ? (
+              session.user.id !== listing.owner.id ? (
+                <ListingMessageBox listingId={listing.id} recipientId={listing.owner.id} />
+              ) : (
+                <p className="mt-4 text-sm text-[var(--muted)]">This is your own listing.</p>
+              )
+            ) : (
+              <p className="mt-4 text-sm text-[var(--muted)]">
+                Please <Link href="/auth/signin" className="font-semibold text-[var(--brand)]">sign in</Link> to message the owner in-app.
+              </p>
+            )}
           </div>
         </div>
       </main>

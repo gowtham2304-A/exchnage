@@ -28,6 +28,9 @@ export default async function ProfilePage() {
         <Link href="/listings" className="rounded-xl bg-[var(--brand)] px-6 py-3 text-sm font-bold text-white">
           Browse Listings
         </Link>
+        <Link href="/messages" className="rounded-xl bg-[var(--brand)] px-6 py-3 text-sm font-bold text-white">
+          Messages
+        </Link>
         <Link href="/" className="rounded-xl border border-[var(--line)] bg-white px-6 py-3 text-sm font-semibold">
           Back to Home
         </Link>
