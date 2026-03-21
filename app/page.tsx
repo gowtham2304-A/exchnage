@@ -127,9 +127,12 @@ export default function Home() {
           <a href="#trust">Trust</a>
           <a href="#faq">FAQ</a>
         </nav>
-        <button className="rounded-full border border-[var(--foreground)] bg-white px-4 py-2 text-sm font-semibold transition hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(191,18,40,0.18)]">
+        <a
+          href="#waitlist"
+          className="rounded-full border border-[var(--foreground)] bg-white px-4 py-2 text-sm font-semibold transition hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(191,18,40,0.18)]"
+        >
           Join Waitlist
-        </button>
+        </a>
       </header>
 
       <main
@@ -149,12 +152,18 @@ export default function Home() {
               placements, and college life while helping owners earn every week.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <button className="rounded-full bg-[var(--brand)] px-6 py-3 text-sm font-bold text-white shadow-[0_14px_30px_rgba(220,38,38,0.35)] transition hover:-translate-y-0.5">
+              <a
+                href="#categories"
+                className="rounded-full bg-[var(--brand)] px-6 py-3 text-sm font-bold text-white shadow-[0_14px_30px_rgba(220,38,38,0.35)] transition hover:-translate-y-0.5"
+              >
                 Start Renting
-              </button>
-              <button className="rounded-full border border-[var(--foreground)] bg-white px-6 py-3 text-sm font-bold transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(191,18,40,0.2)]">
+              </a>
+              <a
+                href="#how"
+                className="rounded-full border border-[var(--foreground)] bg-white px-6 py-3 text-sm font-bold transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(191,18,40,0.2)]"
+              >
                 Start Listing
-              </button>
+              </a>
             </div>
           </div>
           <div className="reveal-up-delay rounded-2xl bg-[var(--brand-deep)] p-5 text-white sm:p-6">
@@ -259,7 +268,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="rounded-3xl bg-[var(--brand)] p-8 text-white sm:p-10">
+        <section id="waitlist" className="rounded-3xl bg-[var(--brand)] p-8 text-white sm:p-10">
           <p className="text-sm uppercase tracking-[0.2em] text-white/80">Launch in progress</p>
           <h2 className="heading-font mt-3 text-3xl font-bold sm:text-4xl">
             Be first to join DivineBridge at Chandigarh University.
