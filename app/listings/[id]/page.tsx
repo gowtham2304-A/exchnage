@@ -92,48 +92,71 @@ export default async function ListingDetailPage({ params }: ListingDetailPagePro
       </header>
 
       <main className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-        <div className="grid gap-8 md:grid-cols-2">
-          <div>
+        <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
+          <div className="reveal-up">
             {listing.imageUrl ? (
-              <img
-                src={listing.imageUrl}
-                alt={listing.title}
-                className="rounded-2xl border border-[var(--line)] object-cover w-full h-96"
-              />
+              <div className="overflow-hidden w-full rounded-3xl bg-[var(--line)]/30">
+                <img
+                  src={listing.imageUrl}
+                  alt={listing.title}
+                  className="h-auto w-full object-cover aspect-[3/4]"
+                />
+              </div>
             ) : (
-              <div className="flex h-96 items-center justify-center rounded-2xl border border-[var(--line)] bg-[var(--surface)] text-sm text-[var(--muted)]">
+              <div className="flex aspect-[3/4] w-full items-center justify-center rounded-3xl bg-[var(--line)]/50 text-sm font-medium text-[var(--muted)]">
                 No image available
               </div>
             )}
           </div>
 
-          <div>
-            <p className="inline-block rounded-full bg-[var(--brand)] px-3 py-1 text-xs font-bold text-white">
+          <div className="reveal-up-delay lg:py-10">
+            <p className="inline-block rounded-full bg-rose-100 px-4 py-1.5 text-[11px] font-bold uppercase tracking-widest text-rose-700">
               {listing.category}
             </p>
-            <h1 className="heading-font mt-4 text-4xl font-bold">{listing.title}</h1>
+            <h1 className="heading-font mt-6 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl">{listing.title}</h1>
 
-            <p className="mt-4 text-lg leading-8 text-[var(--foreground)]">{listing.description}</p>
-
-            <div className="mt-6 grid gap-3 rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-4 text-sm">
-              <p><span className="font-semibold">Price / day:</span> Rs {Number(listing.pricePerDay).toLocaleString("en-IN")}</p>
-              <p><span className="font-semibold">Security deposit:</span> Rs {Number(listing.securityDeposit).toLocaleString("en-IN")}</p>
-              <p><span className="font-semibold">Size:</span> {listing.size}</p>
-              <p><span className="font-semibold">Condition:</span> {listing.condition.replaceAll("_", " ")}</p>
-              <p><span className="font-semibold">Location:</span> {listing.location}</p>
-              <p><span className="font-semibold">Owner:</span> {listing.owner.name ?? "Verified owner"}</p>
+            <div className="mt-6 flex items-baseline gap-2">
+              <span className="heading-font text-3xl font-extrabold text-[var(--brand)]">
+                Rs {Number(listing.pricePerDay).toLocaleString("en-IN")}
+              </span>
+              <span className="text-sm font-semibold uppercase tracking-wider text-[var(--muted)]">/ day</span>
             </div>
 
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/messages" className="rounded-xl bg-[var(--brand)] px-6 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:shadow-lg">
+            <p className="mt-8 text-lg leading-relaxed text-[var(--muted)]">{listing.description}</p>
+
+            <div className="mt-10 grid grid-cols-2 gap-4 border-y border-[var(--line)] py-8 text-sm">
+              <div>
+                <span className="block text-xs font-bold uppercase tracking-wider text-[var(--muted)]">Security Deposit</span>
+                <span className="mt-1 block font-semibold text-[var(--foreground)]">Rs {Number(listing.securityDeposit).toLocaleString("en-IN")}</span>
+              </div>
+              <div>
+                <span className="block text-xs font-bold uppercase tracking-wider text-[var(--muted)]">Size</span>
+                <span className="mt-1 block font-semibold text-[var(--foreground)]">{listing.size}</span>
+              </div>
+              <div>
+                <span className="block text-xs font-bold uppercase tracking-wider text-[var(--muted)]">Condition</span>
+                <span className="mt-1 block font-semibold text-[var(--foreground)]">{listing.condition.replaceAll("_", " ")}</span>
+              </div>
+              <div>
+                <span className="block text-xs font-bold uppercase tracking-wider text-[var(--muted)]">Location</span>
+                <span className="mt-1 block font-semibold text-[var(--foreground)]">{listing.location}</span>
+              </div>
+              <div className="col-span-2 mt-2">
+                <span className="block text-xs font-bold uppercase tracking-wider text-[var(--muted)]">Owner</span>
+                <span className="mt-1 block font-semibold text-[var(--foreground)]">{listing.owner.name ?? "Verified owner"}</span>
+              </div>
+            </div>
+
+            <div className="mt-10 flex flex-wrap gap-4">
+              <Link href="/messages" className="flex h-14 items-center justify-center rounded-full bg-[var(--brand)] px-8 text-[15px] font-bold text-white transition hover:-translate-y-1 hover:shadow-lg hover:shadow-rose-600/30">
                 Open Messages
               </Link>
               {listing.owner.email ? (
                 <a
                   href={`mailto:${listing.owner.email}`}
-                  className="rounded-xl border border-[var(--line)] bg-white px-6 py-3 text-sm font-semibold transition hover:-translate-y-0.5"
+                  className="flex h-14 items-center justify-center rounded-full border-2 border-[var(--line)] bg-transparent px-8 text-[15px] font-bold transition hover:-translate-y-1 hover:border-[var(--foreground)]"
                 >
-                  Contact Owner
+                  Email
                 </a>
               ) : null}
             </div>

@@ -126,42 +126,44 @@ export default async function ListingsPage({ searchParams }: ListingsPageProps) 
             <p className="mt-2 text-sm text-[var(--muted)]">Add products to your database and they will appear here automatically.</p>
           </div>
         ) : (
-          <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-            {listings.map((listing) => (
+          <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {listings.map((listing, i) => (
               <Link
                 key={listing.id}
                 href={`/listings/${listing.id}`}
-                className="group rounded-2xl border border-[var(--line)] bg-[var(--surface)] overflow-hidden transition hover:shadow-lg hover:-translate-y-1"
+                className="group flex flex-col reveal-up"
+                style={{ animationDelay: `${i * 0.05}s` }}
               >
-                <div className="relative h-48 overflow-hidden bg-[var(--background)]">
+                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-[var(--line)]/50">
                   {listing.imageUrl ? (
                     <img
                       src={listing.imageUrl}
                       alt={listing.title}
-                      className="h-full w-full object-cover transition group-hover:scale-105"
+                      className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
                   ) : (
-                    <div className="flex h-full items-center justify-center text-sm text-[var(--muted)]">
-                      No image
+                    <div className="flex h-full items-center justify-center text-sm font-medium text-[var(--muted)]">
+                      No Image
                     </div>
                   )}
+                  <div className="absolute top-3 left-3 rounded-full bg-white/90 backdrop-blur-md px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-[var(--foreground)]">
+                    {listing.category}
+                  </div>
                 </div>
-                <div className="p-4">
-                  <h2 className="heading-font font-semibold line-clamp-2">{listing.title}</h2>
-                  <p className="mt-1 text-sm text-[var(--muted)]">
-                    {listing.owner.name ?? "Verified owner"}  {listing.location}
-                  </p>
-                  <div className="mt-3 flex items-center justify-between">
-                    <div>
-                      <p className="heading-font text-lg font-bold">
-                        Rs {Number(listing.pricePerDay).toLocaleString("en-IN")}
-                      </p>
-                      <p className="text-xs text-[var(--muted)]">per day</p>
-                    </div>
-                    <p className="text-xs font-semibold uppercase tracking-wide text-[var(--brand)]">
-                      {listing.category}
+                
+                <div className="mt-4 flex flex-col pt-1">
+                  <div className="flex items-start justify-between gap-3">
+                    <h2 className="heading-font text-base font-bold leading-snug line-clamp-2 text-[var(--foreground)] transition-colors group-hover:text-[var(--brand)]">
+                      {listing.title}
+                    </h2>
+                    <p className="heading-font shrink-0 text-base font-extrabold text-[var(--foreground)]">
+                      Rs {Number(listing.pricePerDay).toLocaleString("en-IN")}
+                      <span className="block text-right text-[10px] font-semibold text-[var(--muted)]">/day</span>
                     </p>
                   </div>
+                  <p className="mt-1 text-sm font-medium text-[var(--muted)]">
+                    By {listing.owner.name ?? "Verified Owner"} • {listing.location}
+                  </p>
                 </div>
               </Link>
             ))}
