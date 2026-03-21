@@ -1,75 +1,131 @@
 # DivineBridge
 
-DivineBridge is a student-focused clothing rental platform built with Next.js App Router, Prisma, and NextAuth.
+DivineBridge is a student-focused clothing rental platform where users can list outfits, rent from other students, and manage bookings with safer defaults.
+
+## What This Project Includes
+
+- Next.js 16 App Router application
+- Prisma + PostgreSQL data layer
+- NextAuth credentials-based authentication
+- Registration API with validation, hashing, and rate limiting
+- Security headers via proxy-level middleware
+- Landing page and legal pages (`/terms`, `/policy`)
 
 ## Tech Stack
 
-- Next.js 16 (App Router)
+- Next.js 16.2.1
 - React 19
-- Prisma + PostgreSQL
-- NextAuth credentials auth
+- TypeScript
 - Tailwind CSS 4
+- Prisma 6.19.2
+- NextAuth 4
+- Zod
+- bcryptjs
 
-## Local Setup
+## Project Structure
+
+```text
+app/
+  api/auth/[...nextauth]/route.ts
+  api/auth/register/route.ts
+  page.tsx
+  terms/page.tsx
+  policy/page.tsx
+lib/
+  auth.ts
+  prisma.ts
+  rate-limit.ts
+prisma/
+  schema.prisma
+proxy.ts
+```
+
+## Environment Variables
+
+Copy `.env.example` to `.env` and provide production-safe values.
+
+Required values:
+
+- `NEXTAUTH_URL`
+- `NEXTAUTH_SECRET`
+- `DATABASE_URL`
+
+Generate a strong auth secret:
+
+```bash
+openssl rand -base64 32
+```
+
+## Local Development
 
 1. Install dependencies:
 
-	npm install
+```bash
+npm install
+```
 
-2. Create environment variables:
+2. Generate Prisma client:
 
-	Copy `.env.example` to `.env` and fill all values.
+```bash
+npm run prisma:generate
+```
 
-3. Generate Prisma client and run migration:
+3. Run database migration:
 
-	npm run prisma:generate
-	npm run prisma:migrate
+```bash
+npm run prisma:migrate
+```
 
 4. Start development server:
 
-	npm run dev
+```bash
+npm run dev
+```
 
-## Security Features Implemented
+Open `http://localhost:3000`.
+
+## NPM Scripts
+
+- `npm run dev` - start local dev server
+- `npm run build` - create production build
+- `npm run start` - start built app
+- `npm run lint` - run ESLint
+- `npm run prisma:generate` - generate Prisma client
+- `npm run prisma:migrate` - run Prisma migrations
+- `npm run prisma:studio` - open Prisma Studio
+
+## Security Baseline
 
 - Password hashing with bcrypt (12 rounds)
-- Server-side input validation with zod
-- Registration endpoint rate limiting by client IP
-- Security response headers via middleware:
-  - X-Content-Type-Options
-  - X-Frame-Options
-  - Referrer-Policy
-  - Permissions-Policy
-  - Cross-Origin-Opener-Policy
-  - Cross-Origin-Resource-Policy
-  - Strict-Transport-Security (production only)
-- NextAuth secret-based session protection
+- Input validation with zod
+- Rate limiting on registration endpoint
+- NextAuth secret-based session security
+- Proxy-level security headers:
+  - `X-Content-Type-Options: nosniff`
+  - `X-Frame-Options: DENY`
+  - `Referrer-Policy: strict-origin-when-cross-origin`
+  - `Permissions-Policy: camera=(), microphone=(), geolocation=()`
+  - `Cross-Origin-Opener-Policy: same-origin`
+  - `Cross-Origin-Resource-Policy: same-origin`
+  - `Strict-Transport-Security` in production
 
-## Security Checks
+## API Endpoints
 
-Run lint:
+- `POST /api/auth/register` - register account
+- `GET|POST /api/auth/[...nextauth]` - NextAuth handler
 
+## Deployment Checklist
+
+1. Set production environment variables.
+2. Run migrations against production database.
+3. Ensure HTTPS is enabled.
+4. Run:
+
+```bash
 npm run lint
+npm run build
+```
 
-Run dependency audit:
+## Repository
 
-npm audit
-
-## Important Notes
-
-- Use a strong `NEXTAUTH_SECRET` (minimum 32 random bytes).
-- Set `DATABASE_URL` to a managed PostgreSQL instance in production.
-- Enable HTTPS in production to benefit from secure cookie transport and HSTS.
-
-## Publish To GitHub
-
-If your local repo is already committed, create a new empty repository on GitHub,
-then run:
-
-git remote add origin https://github.com/<your-username>/exchnage.git
-git branch -M master
-git push -u origin master
-
-Current local branch: master
-
-Current latest local commit:
-243f113 - feat: secure DivineBridge app and add auth, prisma, and deployment readiness
+GitHub: `https://github.com/gowtham2304-A/exchnage`
