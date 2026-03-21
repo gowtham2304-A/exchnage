@@ -159,12 +159,12 @@ export default function Home() {
               >
                 Start Renting
               </a>
-              <a
-                href="/auth/signup"
+              <Link
+                href="/listings/new"
                 className="rounded-full border border-[var(--foreground)] bg-white px-6 py-3 text-sm font-bold transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(191,18,40,0.2)]"
               >
                 Start Listing
-              </a>
+              </Link>
             </div>
           </div>
           <div className="reveal-up-delay rounded-2xl bg-[var(--brand-deep)] p-5 text-white sm:p-6">

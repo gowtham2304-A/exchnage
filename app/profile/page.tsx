@@ -22,6 +22,9 @@ export default async function ProfilePage() {
       </section>
 
       <div className="mt-8 flex flex-wrap gap-3">
+        <Link href="/listings/new" className="rounded-xl bg-[var(--brand)] px-6 py-3 text-sm font-bold text-white">
+          List New Item
+        </Link>
         <Link href="/listings" className="rounded-xl bg-[var(--brand)] px-6 py-3 text-sm font-bold text-white">
           Browse Listings
         </Link>
