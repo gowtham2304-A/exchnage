@@ -110,44 +110,44 @@ export default function Home() {
         className="mx-auto flex w-full max-w-6xl flex-col gap-14 px-4 pb-14 sm:px-6 lg:px-8"
       >
         <section className="reveal-up">
-          <TiltCard className="grid gap-8 rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-6 shadow-[0_24px_60px_rgba(191,18,40,0.12)] md:grid-cols-[1.35fr_1fr] md:p-10">
+          <div className="grid gap-8 rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-6 shadow-[0_24px_60px_rgba(191,18,40,0.12)] md:grid-cols-[1.35fr_1fr] md:p-10">
             <div>
-            <p className="mb-5 inline-block rounded-full bg-[var(--brand)] px-3 py-1 text-xs font-bold tracking-[0.14em] text-white">
-              Chandigarh University Student Marketplace
-            </p>
-            <h1 className="heading-font text-4xl font-bold leading-tight sm:text-5xl lg:text-5xl">
-              Rent out your clothes, jewellery, and accessories.
-            </h1>
-            <p className="mt-5 max-w-xl text-lg leading-8 text-[var(--muted)]">
-              A simple student marketplace to rent dresses, jhumkas, bangles, and premium outfits for college events. Make money from what you already own.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href="#categories"
-                className="rounded-full bg-[var(--brand)] px-6 py-3 text-sm font-bold text-white shadow-[0_14px_30px_rgba(220,38,38,0.35)] transition hover:-translate-y-0.5"
-              >
-                Start Renting
-              </a>
-              <Link
-                href="/listings/new"
-                className="rounded-full border border-[var(--foreground)] bg-white px-6 py-3 text-sm font-bold transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(191,18,40,0.2)]"
-              >
-                Start Listing
-              </Link>
+              <p className="mb-5 inline-block rounded-full bg-[var(--brand)] px-3 py-1 text-xs font-bold tracking-[0.14em] text-white">
+                Chandigarh University Student Marketplace
+              </p>
+              <h1 className="heading-font text-4xl font-bold leading-tight sm:text-5xl lg:text-5xl">
+                Rent out your clothes, jewellery, and accessories.
+              </h1>
+              <p className="mt-5 max-w-xl text-lg leading-8 text-[var(--muted)]">
+                A simple student marketplace to rent dresses, jhumkas, bangles, and premium outfits for college events. Make money from what you already own.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href="#categories"
+                  className="rounded-full bg-[var(--brand)] px-6 py-3 text-sm font-bold text-white shadow-[0_14px_30px_rgba(220,38,38,0.35)] transition hover:-translate-y-0.5"
+                >
+                  Start Renting
+                </a>
+                <Link
+                  href="/listings/new"
+                  className="rounded-full border border-[var(--foreground)] bg-white px-6 py-3 text-sm font-bold transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(191,18,40,0.2)]"
+                >
+                  Start Listing
+                </Link>
+              </div>
+            </div>
+            <div className="reveal-up-delay rounded-2xl bg-[var(--brand-deep)] p-5 text-white sm:p-6">
+              <p className="text-sm text-white/80">Live campus snapshot</p>
+              <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+                {stats.map((item) => (
+                  <li key={item.label} className="pulse-card rounded-xl border border-white/20 p-4">
+                    <p className="text-2xl font-bold sm:text-3xl">{item.value}</p>
+                    <p className="text-sm text-white/70">{item.label}</p>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
-          <div className="reveal-up-delay rounded-2xl bg-[var(--brand-deep)] p-5 text-white sm:p-6">
-            <p className="text-sm text-white/80">Live campus snapshot</p>
-            <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-              {stats.map((item) => (
-                <li key={item.label} className="pulse-card rounded-xl border border-white/20 p-4">
-                  <p className="text-2xl font-bold sm:text-3xl">{item.value}</p>
-                  <p className="text-sm text-white/70">{item.label}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-          </TiltCard>
         </section>
 
         <section id="how" className="grid gap-4 sm:grid-cols-3">
