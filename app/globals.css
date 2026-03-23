@@ -1,13 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #fdfbf7;
   --surface: #ffffff;
-  --foreground: #000000;
-  --muted: #737373;
-  --brand: #e11d48;
-  --brand-deep: #be123c;
-  --line: #e5e5e5;
+  --foreground: #1a1a1a;
+  --muted: #666666;
+  --brand: #630d16;
+  --brand-deep: #41080e;
+  --brand-gold: #d4af37;
+  --line: #efede6;
 }
 
 @theme inline {
@@ -58,7 +59,7 @@ body {
   height: 26rem;
   top: -6rem;
   right: -8rem;
-  background: rgba(220, 38, 38, 0.15);
+  background: rgba(99, 13, 22, 0.12);
   animation: drift 8s ease-in-out infinite;
 }
 
@@ -67,7 +68,7 @@ body {
   height: 22rem;
   left: -7rem;
   bottom: -8rem;
-  background: rgba(190, 24, 93, 0.1);
+  background: rgba(212, 175, 55, 0.15);
   animation: drift 10s ease-in-out infinite reverse;
 }
 
@@ -156,10 +157,10 @@ body {
 @keyframes pulseGlow {
   0%,
   100% {
-    box-shadow: 0 0 0 rgba(225, 29, 72, 0.06);
+    box-shadow: 0 0 0 rgba(212, 175, 55, 0.05);
   }
   50% {
-    box-shadow: 0 0 0.9rem rgba(225, 29, 72, 0.3);
+    box-shadow: 0 0 0.9rem rgba(212, 175, 55, 0.35);
   }
 }
 

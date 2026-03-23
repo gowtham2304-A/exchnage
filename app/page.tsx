@@ -110,9 +110,9 @@ export default function Home() {
         className="mx-auto flex w-full max-w-6xl flex-col gap-14 px-4 pb-14 sm:px-6 lg:px-8"
       >
         <section className="reveal-up">
-          <div className="grid gap-8 rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-6 shadow-[0_24px_60px_rgba(191,18,40,0.12)] md:grid-cols-[1.35fr_1fr] md:p-10">
+          <div className="grid gap-8 rounded-3xl bg-[var(--surface)] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.05)] md:grid-cols-[1.35fr_1fr] md:p-10 border-none">
             <div>
-              <p className="mb-5 inline-block rounded-full bg-[var(--brand)] px-3 py-1 text-xs font-bold tracking-[0.14em] text-white">
+              <p className="mb-5 inline-block rounded-full bg-[var(--brand-gold)] px-3 py-1 text-xs font-bold tracking-[0.14em] text-white">
                 Chandigarh University Student Marketplace
               </p>
               <h1 className="heading-font text-4xl font-bold leading-tight sm:text-5xl lg:text-5xl">
@@ -124,25 +124,25 @@ export default function Home() {
               <div className="mt-8 flex flex-wrap gap-3">
                 <a
                   href="#categories"
-                  className="rounded-full bg-[var(--brand)] px-6 py-3 text-sm font-bold text-white shadow-[0_14px_30px_rgba(220,38,38,0.35)] transition hover:-translate-y-0.5"
+                  className="rounded-full border border-[var(--brand-gold)] bg-[var(--brand)] px-6 py-3 text-sm font-bold text-white shadow-[inset_0_0_8px_rgba(255,255,255,0.15)] transition hover:-translate-y-0.5 hover:shadow-[0_10px_20px_rgba(0,0,0,0.1)]"
                 >
                   Start Renting
                 </a>
                 <Link
                   href="/listings/new"
-                  className="rounded-full border border-[var(--foreground)] bg-white px-6 py-3 text-sm font-bold transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(191,18,40,0.2)]"
+                  className="rounded-full border-2 border-[var(--brand-gold)] bg-transparent px-6 py-3 text-sm font-bold text-[var(--brand-gold)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(197,160,89,0.2)] hover:bg-[var(--brand-gold)] hover:text-white"
                 >
                   Start Listing
                 </Link>
               </div>
             </div>
-            <div className="reveal-up-delay rounded-2xl bg-[var(--brand-deep)] p-5 text-white sm:p-6">
-              <p className="text-sm text-white/80">Live campus snapshot</p>
+            <div className="reveal-up-delay rounded-2xl border border-[var(--brand-gold)] bg-white/40 p-5 backdrop-blur-[10px] sm:p-6 shadow-sm">
+              <p className="text-sm uppercase tracking-widest text-[var(--foreground)] font-semibold">Live campus snapshot</p>
               <ul className="mt-5 grid gap-3 sm:grid-cols-2">
                 {stats.map((item) => (
-                  <li key={item.label} className="pulse-card rounded-xl border border-white/20 p-4">
-                    <p className="text-2xl font-bold sm:text-3xl">{item.value}</p>
-                    <p className="text-sm text-white/70">{item.label}</p>
+                  <li key={item.label} className="pulse-card rounded-xl border border-[var(--brand-gold)] bg-white/60 p-4 shadow-[0_10px_30px_rgba(0,0,0,0.03)] backdrop-blur-md">
+                    <p className="font-serif text-2xl font-bold text-[var(--brand-gold)] sm:text-3xl">{item.value}</p>
+                    <p className="mt-1 text-sm text-[var(--foreground)]/80 font-medium">{item.label}</p>
                   </li>
                 ))}
               </ul>
@@ -153,7 +153,7 @@ export default function Home() {
         <section id="how" className="grid gap-4 sm:grid-cols-3">
           {steps.map((step, index) => (
             <TiltCard key={step.title} className="reveal-up h-full">
-              <article className="h-full rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6">
+              <article className="h-full rounded-2xl border-none shadow-[0_20px_60px_rgba(0,0,0,0.05)] bg-[var(--surface)] p-6">
                 <p className="heading-font text-sm font-bold text-[var(--brand)]">
                   0{index + 1}
                 </p>
@@ -166,7 +166,7 @@ export default function Home() {
 
         <section
           id="categories"
-          className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-6 sm:p-8"
+          className="rounded-3xl border-none shadow-[0_20px_60px_rgba(0,0,0,0.05)] bg-[var(--surface)] p-6 sm:p-8"
         >
           <h2 className="heading-font text-3xl font-bold sm:text-4xl">Most rented categories</h2>
           <div className="mt-6 grid gap-3 sm:grid-cols-2 md:grid-cols-3">
@@ -174,7 +174,7 @@ export default function Home() {
               <TiltCard key={item}>
                 <Link
                   href={`/listings?category=${encodeURIComponent(item)}`}
-                  className="shine-card block w-full h-full rounded-xl border border-[var(--line)] bg-white px-4 py-4 font-semibold transition hover:shadow-lg hover:-translate-y-1"
+                  className="shine-card block w-full h-full rounded-xl border-none shadow-[0_20px_60px_rgba(0,0,0,0.05)] bg-white px-4 py-4 font-semibold transition hover:shadow-lg hover:-translate-y-1"
                 >
                   {item}
                 </Link>
@@ -187,7 +187,7 @@ export default function Home() {
           {highlights.map((item) => (
             <article
               key={item.title}
-              className="rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6"
+              className="rounded-2xl border-none shadow-[0_20px_60px_rgba(0,0,0,0.05)] bg-[var(--surface)] p-6"
             >
               <h3 className="heading-font text-2xl font-semibold">{item.title}</h3>
               <p className="mt-3 text-[var(--muted)]">{item.description}</p>
@@ -199,7 +199,7 @@ export default function Home() {
           {testimonials.map((item) => (
             <article
               key={item.name}
-              className="rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6"
+              className="rounded-2xl border-none shadow-[0_20px_60px_rgba(0,0,0,0.05)] bg-[var(--surface)] p-6"
             >
               <p className="text-lg leading-8 text-[var(--foreground)]">&ldquo;{item.quote}&rdquo;</p>
               <p className="mt-4 text-sm font-semibold tracking-wide text-[var(--brand)]">
@@ -210,7 +210,7 @@ export default function Home() {
         </section>
 
         <section id="trust" className="grid gap-4 md:grid-cols-2">
-          <div className="rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6">
+          <div className="rounded-2xl border-none shadow-[0_20px_60px_rgba(0,0,0,0.05)] bg-[var(--surface)] p-6">
             <h3 className="heading-font text-2xl font-semibold">Campus-first safety</h3>
             <ul className="mt-4 space-y-3 text-[var(--muted)]">
               <li>Phone verification before first booking.</li>
@@ -218,7 +218,7 @@ export default function Home() {
               <li>Report and moderation panel for suspicious activity.</li>
             </ul>
           </div>
-          <div className="rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6">
+          <div className="rounded-2xl border-none shadow-[0_20px_60px_rgba(0,0,0,0.05)] bg-[var(--surface)] p-6">
             <h3 className="heading-font text-2xl font-semibold">Clear earning model</h3>
             <ul className="mt-4 space-y-3 text-[var(--muted)]">
               <li>You set price per day and security deposit.</li>
@@ -228,11 +228,11 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="faq" className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-6 sm:p-8">
+        <section id="faq" className="rounded-3xl border-none shadow-[0_20px_60px_rgba(0,0,0,0.05)] bg-[var(--surface)] p-6 sm:p-8">
           <h2 className="heading-font text-3xl font-bold">Frequently asked questions</h2>
           <div className="mt-6 space-y-3">
             {faqs.map((item) => (
-              <details key={item.q} className="rounded-xl border border-[var(--line)] bg-white p-4">
+              <details key={item.q} className="rounded-xl border-none shadow-[0_20px_60px_rgba(0,0,0,0.05)] bg-white p-4">
                 <summary className="cursor-pointer font-semibold">{item.q}</summary>
                 <p className="mt-2 text-[var(--muted)]">{item.a}</p>
               </details>

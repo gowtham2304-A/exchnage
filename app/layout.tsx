@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Syne, Plus_Jakarta_Sans } from "next/font/google";
+import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
-const displayFont = Syne({
+const displayFont = Playfair_Display({
   variable: "--font-display",
   subsets: ["latin"],
 });
