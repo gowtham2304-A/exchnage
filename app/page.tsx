@@ -29,29 +29,29 @@ export default function Home() {
   ];
 
   const categories = [
+    "Dresses & Gowns",
+    "Jewellery & Jhumkas",
+    "Bangles & Accessories",
     "Fresher party fits",
     "Placement formalwear",
-    "Club night looks",
-    "Athleisure drops",
     "Wedding and fest sets",
-    "Winter layering",
   ];
 
   const highlights = [
     {
-      title: "Smart campus handovers",
+      title: "Easy campus meetups",
       description:
-        "Predefined safe pickup spots, timing windows, and checklist-based return flow.",
+        "Pick exactly where and when to exchange items right on campus.",
     },
     {
-      title: "Damage confidence",
+      title: "Damage protection",
       description:
-        "Photo logs at handover and return keep both renter and owner protected.",
+        "We use photo proofs at handover to keep your items safe and secure.",
     },
     {
-      title: "Faster repeat rentals",
+      title: "Rent absolutely anything",
       description:
-        "Top-rated wardrobes appear first so trusted users get more requests.",
+        "From placement blazers to gorgeous party jhumkas and dresses. List it all.",
     },
   ];
 
@@ -113,12 +113,11 @@ export default function Home() {
             <p className="mb-5 inline-block rounded-full bg-[var(--brand)] px-3 py-1 text-xs font-bold tracking-[0.14em] text-white">
               Chandigarh University Student Marketplace
             </p>
-            <h1 className="heading-font text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-              Turn your wardrobe into a red-hot income stream.
+            <h1 className="heading-font text-4xl font-bold leading-tight sm:text-5xl lg:text-5xl">
+              Rent out your clothes, jewellery, and accessories.
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-8 text-[var(--muted)]">
-              A beautiful student marketplace to rent premium looks for events,
-              placements, and college life while helping owners earn every week.
+              A simple student marketplace to rent dresses, jhumkas, bangles, and premium outfits for college events. Make money from what you already own.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
@@ -244,8 +243,7 @@ export default function Home() {
             Be first to join DivineBridge at Chandigarh University.
           </h2>
           <p className="mt-4 max-w-2xl text-white/85">
-            Build your wardrobe income stream and stop buying clothes for one-time
-            events.
+            Rent out your outfits, jewellery, and accessories. Stop buying full new sets for every one-time event!
           </p>
           <p className="mt-2 text-sm text-white/80">
             Waitlist email is for launch updates only. To create a profile, use Create Account.
