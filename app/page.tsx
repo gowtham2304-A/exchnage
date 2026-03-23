@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Logo from "@/app/components/logo";
 import WaitlistForm from "@/app/components/waitlist-form";
+import TiltCard from "@/app/components/tilt-card";
 
 export default function Home() {
   const stats = [
@@ -108,8 +109,9 @@ export default function Home() {
         id="top"
         className="mx-auto flex w-full max-w-6xl flex-col gap-14 px-4 pb-14 sm:px-6 lg:px-8"
       >
-        <section className="reveal-up grid gap-8 rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-6 shadow-[0_24px_60px_rgba(191,18,40,0.12)] md:grid-cols-[1.35fr_1fr] md:p-10">
-          <div>
+        <section className="reveal-up">
+          <TiltCard className="grid gap-8 rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-6 shadow-[0_24px_60px_rgba(191,18,40,0.12)] md:grid-cols-[1.35fr_1fr] md:p-10">
+            <div>
             <p className="mb-5 inline-block rounded-full bg-[var(--brand)] px-3 py-1 text-xs font-bold tracking-[0.14em] text-white">
               Chandigarh University Student Marketplace
             </p>
@@ -145,20 +147,20 @@ export default function Home() {
               ))}
             </ul>
           </div>
+          </TiltCard>
         </section>
 
         <section id="how" className="grid gap-4 sm:grid-cols-3">
           {steps.map((step, index) => (
-            <article
-              key={step.title}
-              className="reveal-up rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6"
-            >
-              <p className="heading-font text-sm font-bold text-[var(--brand)]">
-                0{index + 1}
-              </p>
-              <h2 className="mt-3 heading-font text-2xl font-semibold">{step.title}</h2>
-              <p className="mt-3 text-[var(--muted)]">{step.description}</p>
-            </article>
+            <TiltCard key={step.title} className="reveal-up h-full">
+              <article className="h-full rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6">
+                <p className="heading-font text-sm font-bold text-[var(--brand)]">
+                  0{index + 1}
+                </p>
+                <h2 className="mt-3 heading-font text-2xl font-semibold">{step.title}</h2>
+                <p className="mt-3 text-[var(--muted)]">{step.description}</p>
+              </article>
+            </TiltCard>
           ))}
         </section>
 
@@ -169,13 +171,14 @@ export default function Home() {
           <h2 className="heading-font text-3xl font-bold sm:text-4xl">Most rented categories</h2>
           <div className="mt-6 grid gap-3 sm:grid-cols-2 md:grid-cols-3">
             {categories.map((item) => (
-              <Link
-                key={item}
-                href={`/listings?category=${encodeURIComponent(item)}`}
-                className="shine-card rounded-xl border border-[var(--line)] bg-white px-4 py-4 font-semibold transition hover:shadow-lg hover:-translate-y-1"
-              >
-                {item}
-              </Link>
+              <TiltCard key={item}>
+                <Link
+                  href={`/listings?category=${encodeURIComponent(item)}`}
+                  className="shine-card block w-full h-full rounded-xl border border-[var(--line)] bg-white px-4 py-4 font-semibold transition hover:shadow-lg hover:-translate-y-1"
+                >
+                  {item}
+                </Link>
+              </TiltCard>
             ))}
           </div>
         </section>
