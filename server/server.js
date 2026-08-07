@@ -12,8 +12,19 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
-app.use(cors());
+// Configure CORS: allow specific origins via ALLOWED_ORIGINS env (comma-separated),
+// otherwise default to allow all origins (convenient for quick demos).
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean);
+if (allowedOrigins.length) {
+  app.use(cors({ origin: allowedOrigins }));
+} else {
+  app.use(cors());
+}
 app.use(express.json());
+
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', service: 'pulseboard-backend' });
+});
 
 app.get('/api/tasks', (req, res) => {
   res.json({ status: 'success', tasks: store.getTasks() });
@@ -179,11 +190,18 @@ Be concise, use markdown, emojis, bold headers, and bullet points.`;
 });
 
 app.listen(PORT, () => {
-  console.log(`⚡ PulseBoard Express Backend running on http://localhost:${PORT}`);
-  startGitHubPoller(
-    process.env.GITHUB_OWNER,
-    process.env.GITHUB_REPO,
-    process.env.GITHUB_TOKEN,
-    GEMINI_API_KEY
-  );
+  console.log(`⚡ PulseBoard Express Backend running on port ${PORT}`);
+
+  // Start GitHub poller only when required env vars are present. In deployment
+  // environments you should set these via the service dashboard (Render).
+  if (process.env.GITHUB_OWNER && process.env.GITHUB_REPO && process.env.GITHUB_TOKEN) {
+    startGitHubPoller(
+      process.env.GITHUB_OWNER,
+      process.env.GITHUB_REPO,
+      process.env.GITHUB_TOKEN,
+      GEMINI_API_KEY
+    );
+  } else {
+    console.log('GitHub poller not started: set GITHUB_OWNER, GITHUB_REPO, and GITHUB_TOKEN to enable polling.');
+  }
 });

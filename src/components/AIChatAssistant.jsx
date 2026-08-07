@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Send, Bot, Sparkles, User, Terminal } from 'lucide-react';
+import { API_BASE } from '../services/api';
 
 export function AIChatAssistant({ isOpen, onClose, tasks, commitLog, currentUser }) {
   const [messages, setMessages] = useState([]);
@@ -50,7 +51,7 @@ export function AIChatAssistant({ isOpen, onClose, tasks, commitLog, currentUser
     setIsTyping(true);
 
     try {
-      const res = await fetch('http://localhost:5000/api/chat', {
+      const res = await fetch(`${API_BASE}/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

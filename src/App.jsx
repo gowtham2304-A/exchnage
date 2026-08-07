@@ -7,8 +7,7 @@ import { AIChatAssistant } from './components/AIChatAssistant';
 import { ReminderBanner } from './components/ReminderBanner';
 import { MemberSelectModal, INITIAL_DEMO_MEMBERS } from './components/MemberSelectModal';
 import { CreateTaskModal } from './components/CreateTaskModal';
-
-const API_BASE = 'http://localhost:5000/api';
+import { API_BASE } from './services/api';
 
 export default function App() {
   const [tasks, setTasks] = useState([]);

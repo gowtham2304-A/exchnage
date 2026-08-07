@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: pulseboard-backend
+    env: node
+    plan: free
+    rootDir: .
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
