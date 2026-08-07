@@ -20,25 +20,27 @@ class Store {
     this.tasks = [];
     this.activityLog = [];
     this.processedSHAs = new Set();
-    this.useDb = !!process.env.MONGODB_URI;
   }
 
   async getTasks() {
-    if (this.useDb && mongoose.connection && mongoose.connection.readyState) {
+    const useDb = !!process.env.MONGODB_URI && mongoose.connection && mongoose.connection.readyState;
+    if (useDb) {
       return TaskModel.find().sort({ last_updated: -1 }).lean();
     }
     return this.tasks;
   }
 
   async getActivityLog() {
-    if (this.useDb && mongoose.connection && mongoose.connection.readyState) {
+    const useDb = !!process.env.MONGODB_URI && mongoose.connection && mongoose.connection.readyState;
+    if (useDb) {
       return CommitEventModel.find().sort({ created_at: -1 }).lean();
     }
     return this.activityLog;
   }
 
   async addTask(task) {
-    if (this.useDb && mongoose.connection && mongoose.connection.readyState) {
+    const useDb = !!process.env.MONGODB_URI && mongoose.connection && mongoose.connection.readyState;
+    if (useDb) {
       const t = await TaskModel.create({ ...task, last_updated: new Date() });
       return t.toObject();
     }
@@ -47,7 +49,8 @@ class Store {
   }
 
   async clearTasks() {
-    if (this.useDb && mongoose.connection && mongoose.connection.readyState) {
+    const useDb = !!process.env.MONGODB_URI && mongoose.connection && mongoose.connection.readyState;
+    if (useDb) {
       await TaskModel.deleteMany({});
       await CommitEventModel.deleteMany({});
       this.processedSHAs.clear();
@@ -59,7 +62,8 @@ class Store {
   }
 
   async updateTaskStatus(taskId, updates) {
-    if (this.useDb && mongoose.connection && mongoose.connection.readyState) {
+    const useDb = !!process.env.MONGODB_URI && mongoose.connection && mongoose.connection.readyState;
+    if (useDb) {
       const updated = await TaskModel.findByIdAndUpdate(taskId, { ...updates, last_updated: new Date() }, { new: true }).lean();
       return updated;
     }
@@ -83,7 +87,8 @@ class Store {
     if (logEntry.sha) {
       this.processedSHAs.add(logEntry.sha);
     }
-    if (this.useDb && mongoose.connection && mongoose.connection.readyState) {
+    const useDb = !!process.env.MONGODB_URI && mongoose.connection && mongoose.connection.readyState;
+    if (useDb) {
       await CommitEventModel.create({
         sha: logEntry.sha,
         message: logEntry.message,
