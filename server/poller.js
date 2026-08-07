@@ -50,10 +50,10 @@ export function startGitHubPoller(owner, repo, token, apiKey, intervalMs = 10000
 
       console.log(`[Poller] New live commit detected on GitHub: #${sha} "${latestCommit.commit.message}"`);
 
-      const currentTasks = store.getTasks();
-      if (currentTasks.length === 0) {
+      const currentTasks = await store.getTasks();
+      if (!currentTasks || currentTasks.length === 0) {
         console.log('[Poller] No tasks on board yet. Skipping analysis.');
-        store.addActivityLog({
+        await store.addActivityLog({
           id: Date.now().toString(),
           sha,
           author: latestCommit.commit.author.name || 'GitHub Developer',
@@ -78,7 +78,7 @@ export function startGitHubPoller(owner, repo, token, apiKey, intervalMs = 10000
 
       if (!analysis || !analysis.matchedTaskId) {
         console.log('[Poller] No matching task found for this commit.');
-        store.addActivityLog({
+        await store.addActivityLog({
           id: Date.now().toString(),
           sha,
           author: latestCommit.commit.author.name || 'GitHub Developer',
@@ -94,7 +94,7 @@ export function startGitHubPoller(owner, repo, token, apiKey, intervalMs = 10000
       }
 
       // Update store state
-      const updatedTask = store.updateTaskStatus(analysis.matchedTaskId, {
+      const updatedTask = await store.updateTaskStatus(analysis.matchedTaskId, {
         status: analysis.newStatus,
         last_summary: analysis.summary,
         reconsideration_reason: analysis.reconsiderationReason || '',
@@ -102,7 +102,7 @@ export function startGitHubPoller(owner, repo, token, apiKey, intervalMs = 10000
       });
 
       // Log event
-      store.addActivityLog({
+      await store.addActivityLog({
         id: Date.now().toString(),
         sha,
         author: latestCommit.commit.author.name || 'GitHub Developer',

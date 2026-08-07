@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { store } from './store.js';
+import { connectDb } from './db.js';
 import { analyzeDiffWithGemini } from './analyzer.js';
 import { startGitHubPoller } from './poller.js';
 import { GoogleGenerativeAI } from '@google/generative-ai';
@@ -9,6 +10,9 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 dotenv.config();
 
 const app = express();
+
+// Attempt DB connection (non-blocking). If MONGODB_URI is not set, store will use in-memory fallback.
+connectDb();
 const PORT = process.env.PORT || 5000;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
@@ -26,36 +30,39 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', service: 'pulseboard-backend' });
 });
 
-app.get('/api/tasks', (req, res) => {
-  res.json({ status: 'success', tasks: store.getTasks() });
+app.get('/api/tasks', async (req, res) => {
+  const tasks = await store.getTasks();
+  res.json({ status: 'success', tasks });
 });
 
-app.post('/api/tasks', (req, res) => {
+app.post('/api/tasks', async (req, res) => {
   const task = req.body;
   if (!task || !task.title) {
     return res.status(400).json({ error: 'Task title is required' });
   }
-  store.addTask(task);
-  res.json({ status: 'success', task, tasks: store.getTasks() });
+  const created = await store.addTask(task);
+  const tasks = await store.getTasks();
+  res.json({ status: 'success', task: created, tasks });
 });
 
-app.patch('/api/tasks/:id', (req, res) => {
+app.patch('/api/tasks/:id', async (req, res) => {
   const { id } = req.params;
   const updates = req.body;
-  const updatedTask = store.updateTaskStatus(id, updates);
+  const updatedTask = await store.updateTaskStatus(id, updates);
   if (!updatedTask) {
     return res.status(404).json({ error: 'Task not found' });
   }
   res.json({ status: 'success', task: updatedTask });
 });
 
-app.delete('/api/tasks', (req, res) => {
-  store.clearTasks();
+app.delete('/api/tasks', async (req, res) => {
+  await store.clearTasks();
   res.json({ status: 'success', tasks: [] });
 });
 
-app.get('/api/activity', (req, res) => {
-  res.json({ status: 'success', activity: store.getActivityLog() });
+app.get('/api/activity', async (req, res) => {
+  const activity = await store.getActivityLog();
+  res.json({ status: 'success', activity });
 });
 
 app.post('/api/commit', async (req, res) => {
@@ -65,9 +72,10 @@ app.post('/api/commit', async (req, res) => {
   const commitMsg = message || 'wip update';
   const commitDiff = diff || 'diff --git a/src/app.js b/src/app.js\n+ updated code';
 
-  const analysis = await analyzeDiffWithGemini(commitMsg, commitDiff, store.getTasks(), GEMINI_API_KEY);
+  const currentTasks = await store.getTasks();
+  const analysis = await analyzeDiffWithGemini(commitMsg, commitDiff, currentTasks, GEMINI_API_KEY);
 
-  const updatedTask = store.updateTaskStatus(analysis.matchedTaskId, {
+  const updatedTask = await store.updateTaskStatus(analysis.matchedTaskId, {
     status: analysis.newStatus,
     last_summary: analysis.summary,
     reconsideration_reason: analysis.reconsiderationReason || '',
@@ -87,14 +95,17 @@ app.post('/api/commit', async (req, res) => {
     timestamp: new Date().toISOString()
   };
 
-  store.addActivityLog(logEntry);
+  await store.addActivityLog(logEntry);
+
+  const tasks = await store.getTasks();
+  const activity = await store.getActivityLog();
 
   res.json({
     status: 'success',
     analysis,
     updatedTask,
-    tasks: store.getTasks(),
-    activity: store.getActivityLog()
+    tasks,
+    activity
   });
 });
 
@@ -104,8 +115,8 @@ app.post('/api/chat', async (req, res) => {
     return res.status(400).json({ error: 'Question required' });
   }
 
-  const tasks = store.getTasks();
-  const activity = store.getActivityLog();
+  const tasks = await store.getTasks();
+  const activity = await store.getActivityLog();
   const isManager = userRole === 'Manager';
 
   if (GEMINI_API_KEY && GEMINI_API_KEY !== 'YOUR_GEMINI_API_KEY') {
