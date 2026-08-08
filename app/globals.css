@@ -5,8 +5,11 @@
   --surface: #ffffff;
   --foreground: #000000;
   --muted: #737373;
-  --brand: #10b981;
-  --brand-deep: #059669;
+  --brand-50: #ecfdf5;
+  --brand-100: #d1fae5;
+  --brand-500: #10b981; /* emerald-500 */
+  --brand-600: #059669;
+  --brand-700: #047857;
   --line: #e5e5e5;
 }
 
@@ -34,6 +37,10 @@ body {
   font-family: var(--font-display), sans-serif;
   letter-spacing: -0.02em;
 }
+
+/* Utility fallbacks for places not yet using Tailwind config */
+.bg-brand { background-color: var(--brand-500) !important; }
+.text-brand { color: var(--brand-500) !important; }
 
 .red-aura {
   position: relative;
